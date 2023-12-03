@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+
             $table->string('name');
             $table->string('phone');
             $table->string('email')->nullable();
-            $table->bigInteger('user_id')->nullable();
             $table->string('zip_code')->nullable();
             $table->string('street')->nullable();
             $table->string('st_number')->nullable();
@@ -25,7 +26,10 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->text('note')->nullable();
+
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
