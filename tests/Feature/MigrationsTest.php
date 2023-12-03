@@ -16,7 +16,10 @@ class MigrationsTest extends TestCase
      */
     public function test_if_the_users_table_and_columns_were_created(): void
     {
+        // Verifica se a tabela users foi criada
         $this->assertTrue(Schema::hasTable('users'));
+
+        // Verifica se as colunas de users foram criadas adequadamente
         $this->assertTrue(Schema::hasColumns('users', [
             'id',
             'name',
@@ -28,9 +31,15 @@ class MigrationsTest extends TestCase
         ]));
     }
 
+    /**
+     * Testa se a tabela contacts foi criada corretamente
+     */
     public function test_if_the_contacts_table_and_columns_were_created(): void
     {
+        // Verifica se a tabela contacts foi criada
         $this->assertTrue(Schema::hasTable('contacts'));
+
+        // Verifica se as colunas de contacts foram criadas adequadamente
         $this->assertTrue(Schema::hasColumns('contacts', [
             'id',
             'name',
