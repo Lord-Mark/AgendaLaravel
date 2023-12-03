@@ -10,6 +10,12 @@ use App\Models\Contact;
 
 class ContactController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('valid.contact.id')
+            ->only(['show', 'edit', 'update', 'destroy']);
+    }
+
     /**
      * Exibe uma lista de contatos
      */
@@ -42,9 +48,10 @@ class ContactController extends Controller
     /**
      * Exibe o contato especificado
      */
-    public function show(string $id): View
+    public function show(string $id): View|RedirectResponse
     {
-        return view('agenda.contacts.show');
+        $contact = Contact::find($id);
+        return view('agenda.contacts.show', compact('contact'));
     }
 
     /**
@@ -64,6 +71,7 @@ class ContactController extends Controller
         Contact::find($id)->update($data);
 
         return redirect()->route('contacts.index')
+            ->with('success', 'Contato atualizado com sucesso')
             ->setStatusCode(204, 'Contato atualizado com sucesso');
     }
 
