@@ -23,4 +23,5 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::resource('contacts', ContactController::class);
+Route::get('/contacts/search', [ContactController::class, 'search'])->name('contacts.search')->middleware('auth');
+Route::resource('contacts', ContactController::class)->middleware('auth');

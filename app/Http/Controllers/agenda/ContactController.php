@@ -21,7 +21,8 @@ class ContactController extends Controller
      */
     public function index(): View
     {
-        return view('agenda.contacts.index');
+        $contacts = auth()->user()->contacts()->simplePaginate(5);
+        return view('agenda.contacts.index', compact('contacts'));
     }
 
     /**
@@ -38,11 +39,11 @@ class ContactController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->all();
+        $data['user_id'] = auth()->user()->id;
         Contact::create($data);
 
         return redirect()->route('contacts.index')
-            ->with('success', 'Contato criado com sucesso')
-            ->setStatusCode(201);
+            ->with('success', 'Contato criado com sucesso');
     }
 
     /**
@@ -59,7 +60,8 @@ class ContactController extends Controller
      */
     public function edit(string $id): View
     {
-        return view('agenda.contacts.edit');
+        $contact = Contact::find($id);
+        return view('agenda.contacts.edit', compact('contact'));
     }
 
     /**
@@ -71,8 +73,7 @@ class ContactController extends Controller
         Contact::find($id)->update($data);
 
         return redirect()->route('contacts.index')
-            ->with('success', 'Contato atualizado com sucesso')
-            ->setStatusCode(204, 'Contato atualizado com sucesso');
+            ->with('success', 'Contato atualizado com sucesso');
     }
 
     /**
@@ -85,7 +86,16 @@ class ContactController extends Controller
         $contact->delete();
 
         return redirect()->route('contacts.index')
-            ->with('success', 'Contato deletado com sucesso')
-            ->setStatusCode(204);
+            ->with('success', 'Contato deletado com sucesso');
+    }
+
+    /**
+     * Busca os contatos
+     */
+    public function search(Request $request): View
+    {
+        $contacts = auth()->user()->contacts()->where('name', 'like', '%' . $request->search . '%')->simplePaginate(5);
+
+        return view('agenda.contacts.result', compact('contacts'));
     }
 }
