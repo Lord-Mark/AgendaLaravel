@@ -43,9 +43,10 @@
                 </li>
             </ul>
             <!-- Formulário de Busca -->
-            <form method="get" action="{{route('contacts.search')}}" class="form-inline mx-auto" >
+            <form method="get" action="{{route('contacts.search')}}" class="form-inline mx-auto">
                 <div class="input-group">
-                    <input class="form-control" name="search" type="search" placeholder="Pesquisar" aria-label="Buscar contato">
+                    <input class="form-control" name="search" type="search" placeholder="Pesquisar"
+                           aria-label="Buscar contato">
                     <div class="input-group-append">
                         <button class="btn btn-outline-success" type="submit">Buscar</button>
                     </div>
@@ -55,9 +56,10 @@
                 <div class="my2 my-lg-0">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{auth()->user()->name}}
-                                <box-icon name='user-circle' type='solid' color='#e7e7e7' ></box-icon>
+                                <box-icon name='user-circle' type='solid' color='#e7e7e7'></box-icon>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a href="#" class="dropdown-item">Perfil</a>
@@ -78,6 +80,11 @@
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
+        </div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
         </div>
     @endif
     @yield('content')

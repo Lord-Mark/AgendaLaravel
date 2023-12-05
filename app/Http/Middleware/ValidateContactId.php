@@ -18,7 +18,7 @@ class ValidateContactId
     {
         $contactId = $request->route('contact');
         // Se não encontrar o contato retorna para index com 404
-        if (!Contact::find($contactId)) {
+        if (!auth()->user()->contacts->find($contactId)) {
             return redirect()->route('contacts.index')
                 ->with('error', 'Contato não encontrado')
                 ->setStatusCode(404);
