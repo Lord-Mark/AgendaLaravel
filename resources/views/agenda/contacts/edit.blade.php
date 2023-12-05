@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@extends('layouts.form')
 
 @section('content')
 
@@ -37,7 +38,7 @@
         </div>
         <div class="form-group">
             <label>CEP</label>
-            <input type="text" name="zip_code" class="form-control @error('zip_code') is-invalid @enderror"
+            <input type="text" name="zip_code" id="zip_code" class="form-control @error('zip_code') is-invalid @enderror"
                    value="@if(old('zip_code')) {{old('zip_code')}} @else {{$contact->zip_code}} @endif">
             @error('zip_code')
             <div class="invalid-feedback">
@@ -47,7 +48,7 @@
         </div>
         <div class="form-group">
             <label>Rua</label>
-            <input type="text" name="street" class="form-control @error('street') is-invalid @enderror"
+            <input type="text" name="street" id="street" class="form-control @error('street') is-invalid @enderror"
                    value="@if(old('street')) {{old('street')}} @else {{$contact->street}} @endif">
             @error('street')
             <div class="invalid-feedback">
@@ -58,7 +59,7 @@
 
         <div class="form-group">
             <label>Número</label>
-            <input type="text" name="st_number" class="form-control @error('st_number') is-invalid @enderror"
+            <input type="text" name="st_number" id="st_number" class="form-control @error('st_number') is-invalid @enderror"
                    value="@if(old('st_number')) {{old('st_number')}} @else {{$contact->st_number}} @endif">
             @error('st_number')
             <div class="invalid-feedback">
@@ -69,7 +70,7 @@
 
         <div class="form-group">
             <label>Complemento</label>
-            <input type="text" name="complement" class="form-control @error('complement') is-invalid @enderror"
+            <input type="text" name="complement" id="complement" class="form-control @error('complement') is-invalid @enderror"
                    value="@if(old('complement')) {{old('complement')}} @else {{$contact->complement}} @endif">
             @error('complement')
             <div class="invalid-feedback">
@@ -80,7 +81,7 @@
 
         <div class="form-group">
             <label>Bairro</label>
-            <input type="text" name="neighborhood" class="form-control @error('neighborhood') is-invalid @enderror"
+            <input type="text" name="neighborhood" id="neighborhood" class="form-control @error('neighborhood') is-invalid @enderror"
                    value="@if(old('neighborhood')) {{old('neighborhood')}} @else {{$contact->neighborhood}} @endif">
             @error('neighborhood')
             <div class="invalid-feedback">
@@ -91,7 +92,7 @@
 
         <div class="form-group">
             <label>Cidade</label>
-            <input type="text" name="city" class="form-control @error('city') is-invalid @enderror"
+            <input type="text" name="city" id="city" class="form-control @error('city') is-invalid @enderror"
                    value="@if(old('city')) {{old('city')}} @else {{$contact->city}} @endif">
             @error('city')
             <div class="invalid-feedback">
@@ -101,10 +102,21 @@
         </div>
 
         <div class="form-group">
-            <label>Nota</label>
-            <input type="text" name="state" class="form-control @error('state') is-invalid @enderror"
+            <label>Estado (UF)</label>
+            <input type="text" name="state" id="state" class="form-control @error('state') is-invalid @enderror"
                    value="@if(old('state')) {{old('state')}} @else {{$contact->state}} @endif">
             @error('state')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label>Nota</label>
+            <input type="text" name="note" class="form-control @error('note') is-invalid @enderror"
+                   value="@if(old('note')) {{old('note')}} @else {{$contact->note}} @endif">
+            @error('note')
             <div class="invalid-feedback">
                 {{$message}}
             </div>
