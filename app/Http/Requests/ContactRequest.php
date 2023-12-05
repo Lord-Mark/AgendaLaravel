@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Contact;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContactRequest extends FormRequest
@@ -14,8 +15,13 @@ class ContactRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Prepare the data for validation.
+     */
+
     public function attributes(): array
     {
+
         return [
             'name' => 'nome',
             'phone' => 'telefone',
@@ -37,11 +43,21 @@ class ContactRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Se o id do contato está sendo passado, quer dizer que o contato já existe
+        // e que o nome e o email já estão armazenados, assim eles se tornam opcionais neste request
+        if ($this->route('contact')) {
+            return [
+                'name' => 'sometimes|min:3|max:25',
+                'phone' => 'sometimes|numeric|digits:11',
+                'email' => 'sometimes|email:rfc,dns',
+                'zip_code' => 'sometimes|numeric|digits:8'
+            ];
+        }
         return [
             'name' => 'required|min:3|max:25',
             'phone' => 'required|numeric|digits:11',
-            'email' => 'nullable|email:rfc,dns',
-            'zip_code' => 'nullable|numeric|digits:8'
+            'email' => 'sometimes|email:rfc,dns',
+            'zip_code' => 'sometimes|numeric|digits:8'
         ];
     }
 
