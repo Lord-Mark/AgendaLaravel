@@ -15,6 +15,9 @@
     <!-- Bootstrap 5 bundle (popper.js included) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+    @yield('head_input')
+
 </head>
 <body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark" style="margin-bottom: 10px">
