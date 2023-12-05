@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Models\Contact;
 use Tests\TestCase;
+use function Laravel\Prompts\error;
 
 class ContactResourcesTest extends TestCase
 {
@@ -20,6 +21,10 @@ class ContactResourcesTest extends TestCase
      */
     public function test_contact_index_route_is_ok()
     {
+        // Cria um usuário e "atua" como este usuário autenticado
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
         $response = $this->get(route('contacts.index'));
 
         $response->assertOk();
@@ -32,7 +37,10 @@ class ContactResourcesTest extends TestCase
      */
     public function test_contact_show_route_is_ok()
     {
+        // Cria um usuário e "atua" como este usuário autenticado
         $user = User::factory()->create();
+        $this->actingAs($user);
+
         $contact = Contact::factory()->for($user)->create();
 
         $response = $this->get(route('contacts.show', ['contact' => $contact->id]));
@@ -47,11 +55,14 @@ class ContactResourcesTest extends TestCase
      */
     public function test_can_create_contact()
     {
+        // Cria um usuário e "atua" como este usuário autenticado
         $user = User::factory()->create();
+        $this->actingAs($user);
+
         $contactData = [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'phone' => fake()->unique()->phoneNumber(),
+            'email' => fake()->unique()->email(),
+            'phone' => fake()->randomNumber(6, true) . '' . fake()->randomNumber(5, true),
             'zip_code' => fake()->randomNumber(8, true),
             'street' => fake()->streetName(),
             'st_number' => fake()->buildingNumber(),
@@ -65,7 +76,7 @@ class ContactResourcesTest extends TestCase
 
         $response = $this->post(route('contacts.store'), $contactData);
 
-        $response->assertCreated();
+        $response->assertFound();
 
         $this->assertDatabaseHas('contacts', $contactData);
     }
@@ -78,7 +89,10 @@ class ContactResourcesTest extends TestCase
      */
     public function test_can_update_contact()
     {
+        // Cria um usuário e "atua" como este usuário autenticado
         $user = User::factory()->create();
+        $this->actingAs($user);
+
         $contact = Contact::factory()->for($user)->create();
         $updatedData = [
             'name' => 'Updated Name',
@@ -86,8 +100,8 @@ class ContactResourcesTest extends TestCase
 
         $response = $this->put(route('contacts.update', ['contact' => $contact->id]), $updatedData);
 
-        // Verifica se o status-code retornado é 204 (No Content) → sucesso
-        $response->assertNoContent();
+        // Verifica se o status-code retornado é 302 → sucesso
+        $response->assertFound();
 
         $changedContact = Contact::find($contact->id);
         $diff = array_diff($contact->toArray(), $changedContact->toArray());
@@ -103,12 +117,15 @@ class ContactResourcesTest extends TestCase
      */
     public function test_can_delete_contact()
     {
+        // Cria um usuário e "atua" como este usuário autenticado
         $user = User::factory()->create();
+        $this->actingAs($user);
+
         $contact = Contact::factory()->for($user)->create();
 
         $response = $this->delete(route('contacts.destroy', ['contact' => $contact->id]));
 
-        $response->assertNoContent();
+        $response->assertFound();
     }
 
     //////////// A partir deste ponto os testes serão para casos que devem dar erro ////////////
@@ -118,6 +135,10 @@ class ContactResourcesTest extends TestCase
      */
     public function test_contact_routes_user_not_found()
     {
+        // Cria um usuário e "atua" como este usuário autenticado
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
         // Cria um ID de contato que não existe
         $nonExistentContactId = 9999;
 
