@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\agenda;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\ContactRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use App\Models\Contact;
 
 class ContactController extends Controller
@@ -36,7 +36,7 @@ class ContactController extends Controller
     /**
      * Insere no banco um contato criado
      */
-    public function store(Request $request): RedirectResponse
+    public function store(ContactRequest $request): RedirectResponse
     {
         $data = $request->all();
         $data['user_id'] = auth()->user()->id;
@@ -67,7 +67,7 @@ class ContactController extends Controller
     /**
      * Atualiza o contato especificado no banco de dados
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(ContactRequest $request, string $id): RedirectResponse
     {
         $data = $request->all();
         Contact::find($id)->update($data);
@@ -92,7 +92,7 @@ class ContactController extends Controller
     /**
      * Busca os contatos
      */
-    public function search(Request $request): View
+    public function search(ContactRequest $request): View
     {
         $contacts = auth()->user()->contacts()->where('name', 'like', '%' . $request->search . '%')->simplePaginate(5);
 
