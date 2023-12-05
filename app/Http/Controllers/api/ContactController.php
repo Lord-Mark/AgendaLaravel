@@ -21,12 +21,14 @@ class ContactController extends Controller
         ]);
     }
 
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        $contacts = Contact::find($id);
-
+        $contact = Contact::find($id);
+        if (!$contact) {
+            return response()->json(['message' => 'Contato não encontrado'], 404);
+        }
         return response()->json([
-            'contacts' => $contacts
+            'contact' => $contact
         ]);
     }
 }
