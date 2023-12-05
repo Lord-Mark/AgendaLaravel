@@ -19,7 +19,6 @@
                             $('#neighborhood').val(response.bairro);
                             $('#city').val(response.localidade);
                             $('#state').val(response.uf);
-                            // Preencha outros campos do endereço se necessário
                         } else {
                             alert('CEP não encontrado.');
                         }
