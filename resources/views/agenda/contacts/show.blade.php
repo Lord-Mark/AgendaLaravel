@@ -1,3 +1,7 @@
-<div>
-    <!-- Simplicity is an acquired taste. - Katharine Gerould -->
-</div>
+@extends('layouts.app')
+
+@section('content')
+    <div>
+
+    </div>
+@endsection

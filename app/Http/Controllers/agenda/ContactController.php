@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\agenda;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\ContactRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use App\Models\Contact;
 
 class ContactController extends Controller
@@ -21,7 +21,8 @@ class ContactController extends Controller
      */
     public function index(): View
     {
-        return view('agenda.contacts.index');
+        $contacts = auth()->user()->contacts()->simplePaginate(5);
+        return view('agenda.contacts.index', compact('contacts'));
     }
 
     /**
@@ -35,14 +36,14 @@ class ContactController extends Controller
     /**
      * Insere no banco um contato criado
      */
-    public function store(Request $request): RedirectResponse
+    public function store(ContactRequest $request): RedirectResponse
     {
         $data = $request->all();
+        $data['user_id'] = auth()->user()->id;
         Contact::create($data);
 
         return redirect()->route('contacts.index')
-            ->with('success', 'Contato criado com sucesso')
-            ->setStatusCode(201);
+            ->with('success', 'Contato criado com sucesso');
     }
 
     /**
@@ -59,20 +60,20 @@ class ContactController extends Controller
      */
     public function edit(string $id): View
     {
-        return view('agenda.contacts.edit');
+        $contact = Contact::find($id);
+        return view('agenda.contacts.edit', compact('contact'));
     }
 
     /**
      * Atualiza o contato especificado no banco de dados
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(ContactRequest $request, string $id): RedirectResponse
     {
         $data = $request->all();
         Contact::find($id)->update($data);
 
         return redirect()->route('contacts.index')
-            ->with('success', 'Contato atualizado com sucesso')
-            ->setStatusCode(204, 'Contato atualizado com sucesso');
+            ->with('success', 'Contato atualizado com sucesso');
     }
 
     /**
@@ -85,7 +86,16 @@ class ContactController extends Controller
         $contact->delete();
 
         return redirect()->route('contacts.index')
-            ->with('success', 'Contato deletado com sucesso')
-            ->setStatusCode(204);
+            ->with('success', 'Contato deletado com sucesso');
+    }
+
+    /**
+     * Busca os contatos
+     */
+    public function search(ContactRequest $request): View
+    {
+        $contacts = auth()->user()->contacts()->where('name', 'like', '%' . $request->search . '%')->simplePaginate(5);
+
+        return view('agenda.contacts.result', compact('contacts'));
     }
 }
