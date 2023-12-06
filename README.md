@@ -31,7 +31,7 @@ Dentro da pasta do projeto:
 - Agora você pode acessar a aplicação utilizando 
 o endereço exibido na mensagem do terminal
 
-## Screen Shots
+## Screenshots
 
 ![img.png](img.png)
 
