@@ -15,6 +15,9 @@ garantindo commits claros e focados em resolver problemas.
 ## Como rodar este projeto
 Dentro da pasta do projeto:
 
+- Dê o comando `composer install` para instalar todas as dependências
+
+
 - Renomeie o arquivo env.example para .env
 
 
