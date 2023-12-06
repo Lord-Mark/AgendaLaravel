@@ -12,15 +12,6 @@ além disso, o fluxo _**GitHub Flow**_ foi utilizado para orientar
 e organizar de forma eficiente o controle de versão,
 garantindo commits claros e focados em resolver problemas.
 
-## Conceitos laravel explorados
-
-- Rotas
-- Autenticação
-- Middlewares
-- Requests
-- Factories
-- Seeders
-
 ## Como rodar este projeto
 Dentro da pasta do projeto:
 
