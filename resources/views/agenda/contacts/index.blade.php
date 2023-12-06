@@ -27,10 +27,7 @@
                     </a>
                 </td>
                 <td>
-                    <a class="text-decoration-none text-dark"
-                       href="{{route('contacts.show', ['contact' => $contact->id])}}">
-                        {{$contact->street}} {{$contact->st_number}} {{$contact->city}} {{$contact->state}}
-                    </a>
+                    {{$contact->getFormattedAddress()}}
                 </td>
                 <td>
                     {{$contact->email}}
