@@ -31,6 +31,9 @@ Dentro da pasta do projeto:
 - Agora você pode acessar a aplicação utilizando 
 o endereço exibido na mensagem do terminal
 
+- Depois de registrar sua conta, você pode popular sua agenda com contatos fictícios,
+utilizando `php artisan db:seed`, para observar uma agenda cheia de contatos.
+
 ## Screenshots
 
 ![img.png](img.png)
