@@ -7,6 +7,7 @@ use App\Http\Requests\ContactRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use App\Models\Contact;
+use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
@@ -21,7 +22,7 @@ class ContactController extends Controller
      */
     public function index(): View
     {
-        $contacts = auth()->user()->contacts()->simplePaginate(5);
+        $contacts = auth()->user()->contacts()->Paginate(6);
         return view('agenda.contacts.index', compact('contacts'));
     }
 
@@ -92,10 +93,10 @@ class ContactController extends Controller
     /**
      * Busca os contatos
      */
-    public function search(ContactRequest $request): View
+    public function search(Request $request): View
     {
-        $contacts = auth()->user()->contacts()->where('name', 'like', '%' . $request->search . '%')->simplePaginate(5);
+        $contacts = auth()->user()->contacts()->where('name', 'like', '%' . $request->search . '%')->Paginate(6);
 
-        return view('agenda.contacts.result', compact('contacts'));
+        return view('agenda.contacts.index', compact('contacts'));
     }
 }

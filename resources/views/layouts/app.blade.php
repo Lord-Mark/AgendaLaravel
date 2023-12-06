@@ -22,7 +22,7 @@
 <body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark" style="margin-bottom: 10px">
     <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="{{route('contacts.index')}}">
+        <a class="navbar-brand d-flex align-items-center" href="{{route('home')}}">
             <box-icon name='contact' type='solid' color='#e7e7e7'></box-icon>
             <span class="ms-2">Agenda</span>
         </a>
@@ -42,21 +42,26 @@
                        href="{{route('contacts.create')}}">Criar</a>
                 </li>
             </ul>
-            <!-- Formulário de Busca -->
-            <form method="get" action="{{route('contacts.search')}}" class="form-inline mx-auto">
-                <div class="input-group">
-                    <input class="form-control" name="search" type="search" placeholder="Pesquisar"
-                           aria-label="Buscar contato">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-success" type="submit">Buscar</button>
-                    </div>
-                </div>
-            </form>
+
             @auth()
-                <div class="my2 my-lg-0">
-                    <ul class="navbar-nav mr-auto">
+                <!-- Formulário de Busca -->
+                <form method="get" action="{{route('contacts.search')}}" class="form-inline mx-auto">
+                    <div class="input-group">
+                        <input class="form-control" name="search" type="search" placeholder="Pesquisar">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-success d-flex align-items-center" type="submit">
+                                <box-icon name='search-alt-2' color='#5cb85c'></box-icon>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            @endauth
+            <div class="my2 my-lg-0">
+                <ul class="navbar-nav mr-auto">
+                    @auth()
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown"
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
+                               id="navbarDropdown"
                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{auth()->user()->name}}
                                 <box-icon name='user-circle' type='solid' color='#e7e7e7'></box-icon>
@@ -70,9 +75,17 @@
                                 </form>
                             </div>
                         </li>
-                    </ul>
-                </div>
-            @endauth
+                    @endauth
+                    @guest()
+                        <li>
+                            <a class="nav-link" href="{{route('login')}}">Entrar</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{route('register')}}">Registrar Conta</a>
+                        </li>
+                    @endguest
+                </ul>
+            </div>
         </div>
     </div>
 </nav>

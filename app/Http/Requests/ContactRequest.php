@@ -49,15 +49,15 @@ class ContactRequest extends FormRequest
             return [
                 'name' => 'sometimes|min:3|max:25',
                 'phone' => 'sometimes|numeric|digits:11',
-                'email' => 'sometimes|email:rfc,dns',
-                'zip_code' => 'sometimes|numeric|digits:8'
+                'email' => 'nullable|email:rfc,dns',
+                'zip_code' => 'nullable|numeric|digits:8'
             ];
         }
         return [
             'name' => 'required|min:3|max:25',
             'phone' => 'required|numeric|digits:11',
-            'email' => 'sometimes|email:rfc,dns',
-            'zip_code' => 'sometimes|numeric|digits:8'
+            'email' => 'nullable|email:rfc,dns',
+            'zip_code' => 'nullable|numeric|digits:8'
         ];
     }
 
